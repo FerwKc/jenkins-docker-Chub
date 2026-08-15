@@ -5,6 +5,8 @@ pipeline {
         IMAGE_NAME = 'jenkins-web-app'
         CONTAINER_NAME = 'web-app-container'
         PORT = '8080'
+        // Se añade la ruta donde se instala Docker Desktop en Windows
+        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
     }
 
     stages {
