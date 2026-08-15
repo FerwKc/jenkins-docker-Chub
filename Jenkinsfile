@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = 'jenkins-web-app'
         CONTAINER_NAME = 'web-app-container'
-        PORT = '8080'
+        PORT = '8085'
         // Ruta exacta encontrada en tu equipo
         DOCKER_BIN = 'C:\\Users\\eferk\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
     }
