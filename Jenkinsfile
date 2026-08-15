@@ -5,8 +5,8 @@ pipeline {
         IMAGE_NAME = 'jenkins-web-app'
         CONTAINER_NAME = 'web-app-container'
         PORT = '8080'
-        // Se añade la ruta donde se instala Docker Desktop en Windows
-        PATH = "C:\\Program Files\\Docker\\Docker\\resources\\bin;${env.PATH}"
+        // Ruta exacta encontrada en tu equipo
+        DOCKER_BIN = 'C:\\Users\\eferk\\AppData\\Local\\Programs\\DockerDesktop\\resources\\bin\\docker.exe'
     }
 
     stages {
@@ -29,16 +29,16 @@ pipeline {
 
         stage('Construcción') {
             steps {
-                bat "docker build -t ${IMAGE_NAME}:${BUILD_NUMBER} ."
+                bat '"%DOCKER_BIN%" build -t %IMAGE_NAME%:%BUILD_NUMBER% .'
             }
         }
 
         stage('Despliegue') {
             steps {
                 bat """
-                    docker stop ${CONTAINER_NAME} 2>nul || exit 0
-                    docker rm ${CONTAINER_NAME} 2>nul || exit 0
-                    docker run -d -p ${PORT}:80 --name ${CONTAINER_NAME} ${IMAGE_NAME}:${BUILD_NUMBER}
+                    "%DOCKER_BIN%" stop %CONTAINER_NAME% 2>nul || exit 0
+                    "%DOCKER_BIN%" rm %CONTAINER_NAME% 2>nul || exit 0
+                    "%DOCKER_BIN%" run -d -p %PORT%:80 --name %CONTAINER_NAME% %IMAGE_NAME%:%BUILD_NUMBER%
                 """
             }
         }
